@@ -1,0 +1,24 @@
+.banner-upheading{
+    color: #dc834e;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: "thea amelia";
+    font-style: italic;
+}
+.banner-heading{
+    font-family: "gt walsheim pro", helveticaneue-light, "helvetica neue light", "helvetica neue", Helvetica, Arial, "lucida grande", sans-serif;
+    ;
+    font-size: 70px;
+    line-height: 70px;
+    font-weight: 700;
+    color: black;
+}
+.btn-explore{
+    background-color: #202f59;
+    padding-left: 40px;
+    color: blanchedalmond;
+    padding-right: 40px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 40px;
+}

@@ -1,0 +1,24 @@
+.about{
+    font-weight: 900;
+    color: black;
+    font-size: 55px;
+}
+.about-sub{
+    line-height: 30px;
+    margin-right: 50px;
+    font-size: 20px;
+    text-align: center;
+}
+.button-learn{
+    margin-left: 40px;
+    background-color: #202f59;
+    padding-left: 55px;
+    color: blanchedalmond;
+    padding-right: 55px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    margin-top: 40px;
+}
+.holiday{
+    margin-top: 200px;
+}
