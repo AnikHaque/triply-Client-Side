@@ -9,7 +9,7 @@ initializeFirebase();
 const useFirebase = () => {
 const [user,setUser] =useState({})
  const [isLoading, setIsLoading] = useState(true);
-// const [authError,setAuthError] = useState('');
+ const [authError,setAuthError] = useState('');
 // const [admin,setAdmin] = useState(false);
 
 const auth = getAuth();
@@ -20,20 +20,20 @@ const registerUser = (email,password) => {
      setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-    // setAuthError('');
-    // const newUser = {email, displayName:name}
-    // setUser(newUser);
-// saveUser(email,name,'POST');
+     setAuthError('');
+     const newUser = {email, displayName:name}
+     setUser(newUser);
+ saveUser(email,name,'POST');
 
-    // updateProfile(auth.currentUser, {
-    //   displayName:name
-    // })
-    // .then(() => {
+     updateProfile(auth.currentUser, {
+       displayName:name
+    })
+     .then(() => {
 
-    // })
-    // .catch((error) => {
+     })
+     .catch((error) => {
 
-    // });
+     });
 
 
     // history.replace('/');
@@ -92,6 +92,22 @@ useEffect(()=>{
         }
         setIsLoading(false);
       });
+
+      {
+        const user = {email,displayName};
+        fetch('https://fast-reaches-25590.herokuapp.com/users', {
+        method:method,
+        headers: {
+          'content-type':'application/json'
+        
+        },
+        body:JSON.stringify(user)
+        
+        })
+        .then()
+        }
+
+
       return () => unsubscribe;
 
 },[])
