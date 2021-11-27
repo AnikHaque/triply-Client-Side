@@ -23,7 +23,7 @@ const ServiceDetail = () => {
      const {id} = useParams();
     const [service,setService] = useState({})
     useEffect(()=>{
-        fetch(`https://rocky-hamlet-39429.herokuapp.com/services/${id}`)
+        fetch(`http://localhost:5000/services/${id}`)
         .then(res=>res.json())
         .then(data=>setService(data))
 
@@ -32,7 +32,7 @@ const ServiceDetail = () => {
     const onSubmit = data =>{
         data.status="pending";
         console.log(data);
-         axios.post("https://rocky-hamlet-39429.herokuapp.com/orders",data)
+         axios.post("http://localhost:5000/orders",data)
          .then(res=>{
              if(res.data.insertedId){
                  alert("Added Successfully");

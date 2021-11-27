@@ -1,159 +1,217 @@
+// import { useEffect, useState } from 'react';
+// import initializeFirebase from '../components/login/firebase/firebase.init'
+// import { getAuth, createUserWithEmailAndPassword,signOut,onAuthStateChanged,signInWithEmailAndPassword  } from "firebase/auth";
+// initializeFirebase()
+// const useFirebase = () => {
+//   const [user,setUser] = useState({})
+//   const [isLoading,setIsLoading]= useState(true);
+//   const auth = getAuth();
+
+// const registerUser = (email,password) => {
+//   setIsLoading(true);
+//   createUserWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+//     // Signed in 
+//     const user = userCredential.user;
+//     // ...
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//     // ..
+//   })
+//   .finally(()=>setIsLoading(false));
+// }
+
+// const loginUser = (email,password,location,history)=>{
+//   setIsLoading(true);
+//   signInWithEmailAndPassword(auth, email, password)
+//   .then((userCredential) => {
+   
+//     const destination = location?.state?.from || '/';
+//     history.replace(destination);
+   
+//   })
+//   .catch((error) => {
+//     const errorCode = error.code;
+//     const errorMessage = error.message;
+//   })
+//   .finally(()=>setIsLoading(false));
+// }
+
+// useEffect(()=>{
+
+//   const unsubscribe = onAuthStateChanged(auth, (user) => {
+//     if (user) {
+     
+    
+//     setUser(user);
+//     } else {
+//      setUser({});
+//     }
+//     setIsLoading(false);
+//   });
+// return ()=>unsubscribe;
+
+// },[])
+
+
+// const logOut = () => {
+//   setIsLoading(true);
+//   signOut(auth).then(() => {
+//     // Sign-out successful.
+//   }).catch((error) => {
+//     // An error happened.
+//   })
+//   .finally(()=>setIsLoading(false));
+// }
+
+//   return {
+//     user,
+//     isLoading,
+//     registerUser,
+//     logOut,
+//     loginUser,
+//   }
+
+// }
+// export default useFirebase;
+
 import { useEffect, useState } from "react";
+ import initializeFirebase from '../components/login/firebase/firebase.init'
 
-
-import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup} from "firebase/auth";
-import initializeFirebase from "../components/login/firebase/firebase.init";
+import { getAuth, createUserWithEmailAndPassword, signOut, onAuthStateChanged,signInWithEmailAndPassword,signInWithPopup,GoogleAuthProvider,updateProfile} from "firebase/auth";
 
 
 initializeFirebase();
+
 const useFirebase = () => {
 const [user,setUser] =useState({})
- const [isLoading, setIsLoading] = useState(true);
- const [authError,setAuthError] = useState('');
-// const [admin,setAdmin] = useState(false);
+const [isLoading, setIsLoading] = useState(true);
+const [authError,setAuthError] = useState('');
+const [admin,setAdmin] = useState(false);
 
 const auth = getAuth();
-// const provider = new GoogleAuthProvider();
+const provider = new GoogleAuthProvider();
 
-// email and password registration 
-const registerUser = (email,password) => {
-     setIsLoading(true);
+
+const registerUser = (email,password,name,history) => {
+    setIsLoading(true);
     createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-     setAuthError('');
-     const newUser = {email, displayName:name}
-     setUser(newUser);
- saveUser(email,name,'POST');
+    setAuthError('');
+    const newUser = {email, displayName:name}
+    setUser(newUser);
+    saveUser(email,name,'POST');
 
-     updateProfile(auth.currentUser, {
-       displayName:name
-    })
-     .then(() => {
+    updateProfile(auth.currentUser, {
+      displayName:name
+    }).then(() => {
 
-     })
-     .catch((error) => {
+    }).catch((error) => {
 
-     });
+    });
 
 
-    // history.replace('/');
+    history.replace('/');
         
       })
       .catch((error) => {
-     
+        setAuthError(error.message);
     
       })
-      .finally(()=>setIsLoading(false))
-     
+      .finally(()=>setIsLoading(false));
     
  
 }
 
 const loginUser = (email,password,location,history) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-         const destination = location?.state?.from || '/';
-         history.replace(destination);
+        const destination = location?.state?.from || '/';
+        history.replace(destination);
         
     
-        // setAuthError('');
+        setAuthError('');
       })
       .catch((error) => {
         
-        // setAuthError(error.message);
+        setAuthError(error.message);
       })
-      .finally(()=>setIsLoading(false))
+      .finally(()=>setIsLoading(false));
 }
 
-// const signInWithGoogle = (location,history) => {
-//   setIsLoading(true);
-//   signInWithPopup(auth, provider)
-//   .then((result) => {
-//     const user = result.user;
-//     saveUser(user.email,user.displayName,'PUT')
-//     setAuthError('');
+const signInWithGoogle = (location,history) => {
+  setIsLoading(true);
+  signInWithPopup(auth, provider)
+  .then((result) => {
+    const user = result.user;
+    saveUser(user.email,user.displayName,'PUT')
+    setAuthError('');
     
-//   }).catch((error) => {
+  }).catch((error) => {
    
-//     setAuthError(error.message);
+    setAuthError(error.message);
     
-//   })
-//   .finally(()=>setIsLoading(false));
-// }
+  })
+  .finally(()=>setIsLoading(false));
+}
 
-// manage user
 useEffect(()=>{
    const unsubscribe = onAuthStateChanged(auth, (user) => {
         if (user) {
+          
+          const uid = user.uid;
           setUser(user);
         } else {
           setUser({})
         }
         setIsLoading(false);
       });
-
-      {
-        const user = {email,displayName};
-        fetch('https://fast-reaches-25590.herokuapp.com/users', {
-        method:method,
-        headers: {
-          'content-type':'application/json'
-        
-        },
-        body:JSON.stringify(user)
-        
-        })
-        .then()
-        }
-
-
       return () => unsubscribe;
 
 },[])
 
-// useEffect(()=>{
-// fetch(`https://fast-reaches-25590.herokuapp.com/users/${user.email}`)
-// .then(res=>res.json())
-// .then(data=>setAdmin(data.admin))
-// },[user.email])
+useEffect(()=>{
+fetch(`https://fast-reaches-25590.herokuapp.com/users/${user.email}`)
+.then(res=>res.json())
+.then(data=>setAdmin(data.admin))
+},[user.email])
 
-
-// logout 
 const logOut = () => {
-  setIsLoading(true);
-    signOut(auth)
-    .then(() => {
+    signOut(auth).then(() => {
+        
+      }).catch((error) => {
         
       })
-      .catch((error) => {
-        
-      })
-      .finally(()=>setIsLoading(false))
-     
+      .finally(()=> setIsLoading(false));
       
 }
 
-// const saveUser = (email, displayName,method) => {
-// const user = {email,displayName};
-// fetch('https://fast-reaches-25590.herokuapp.com/users', {
-// method:method,
-// headers: {
-//   'content-type':'application/json'
+const saveUser = (email, displayName,method) => {
+const user = {email,displayName};
+fetch('https://fast-reaches-25590.herokuapp.com/users', {
+method:method,
+headers: {
+  'content-type':'application/json'
 
-// },
-// body:JSON.stringify(user)
+},
+body:JSON.stringify(user)
 
-// })
-// .then()
-// }
+})
+.then()
+}
 
 return{
 user,
+admin,
+isLoading,
 registerUser,
+authError,
 logOut,
 loginUser,
-isLoading,
+signInWithGoogle,
 }
 
 }

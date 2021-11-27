@@ -5,12 +5,15 @@ import Navigation from '../Navigation';
 import Services from '../../services/Services'
 import Footer from '../../footer/Footer';
 import Holiday from '../../holiday/Holiday';
+import Offers from '../../offers/Offers';
 
 const Home = () => {
     return (
         <div>
            <Banner></Banner>
            <About></About>
+           <Offers></Offers>
+          
            <Services></Services>
            <Holiday></Holiday>
            <Footer></Footer>

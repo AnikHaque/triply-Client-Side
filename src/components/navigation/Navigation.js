@@ -12,8 +12,12 @@ import { useTheme } from '@mui/material';
 import useAuth from '../../hooks/useAuth';
 // import useAuth from '../../hooks/useAuth';
 const fullNav={
-  padding:'20px',
-  paddingBottom:'30px'
+  padding:'10px',
+  backgroundColor:'#3f3a64',
+  marginBottom:'20px'
+}
+const imagenav = {
+  width:'130px'
 }
 
 const navStyle = {
@@ -28,6 +32,7 @@ export default function Navigation() {
     navItem:{
       color:'white',
       textDecoration:'none'
+     
     },
 
     navIcon:{
@@ -51,8 +56,8 @@ export default function Navigation() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            <img src="https://demo2wpopal.b-cdn.net/triply/wp-content/uploads/2020/11/logo.svg" className="img-fluid w-25"></img>
+          <Typography variant="p" component="div" sx={{ flexGrow: 1 }}>
+            <img src="https://demo2wpopal.b-cdn.net/triply/wp-content/uploads/2020/11/logo.svg" className="img-fluid" style={imagenav}></img>
           </Typography>
           <Box>
            <Link style={navStyle} className={navItem} to="/home">
@@ -61,33 +66,19 @@ export default function Navigation() {
           <Link className={navItem} to="/about">
           <Button color="inherit">About</Button>
           </Link>
-          
-          
-          
-          {
-            user?.email &&
-            <Link className={navItem} to="/myorder">
-            <Button color="inherit">My orders</Button>
-            </Link>
-           
-          }
-
-          {
-            user?.email &&
-            <Link className={navItem} to="/manageorder">
-          <Button color="inherit">Manage all orders</Button>
+          <Link className={navItem} to="/destination">
+          <Button color="inherit">Destination</Button>
           </Link>
-           
-          }
-
-          {/* {
+          <Link className={navItem} to="/Contact">
+          <Button color="inherit">Contact</Button>
+          </Link>
+        
+           {
             user?.email &&
             <Link className={navItem} to="/dashboard">
             <Button color="inherit">Dashboard</Button>
-            </Link>
-            
-            
-          } */}
+            </Link>  
+          } 
            {
             user?.email &&
             <Link className={navItem} to="/">

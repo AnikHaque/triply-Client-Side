@@ -4,6 +4,9 @@ import image1 from '../../../images/h1_bg-1 (1).jpg'
 import image2 from '../../../images/image.png'
 import './Banner.css'
 
+const fullbanner = {
+  marginTop:'100px'
+}
 const Banner = () => {
     const settings = {
         dots: true,
@@ -16,7 +19,7 @@ const Banner = () => {
         cssEase: "linear"
       };
     return (
-        <div>
+        <div className="fullbanner">
         <Slider {...settings}>
           <div>
           <div class="container">

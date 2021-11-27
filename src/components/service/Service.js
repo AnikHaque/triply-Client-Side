@@ -9,15 +9,7 @@ const Service = ({ service }) => {
     const url =`/servicess/${_id}`;
     return (
         <div>
-            {/* <img src={img} alt="" />
-            <h3>{name}</h3>
-            <h5>Price: {price}</h5>
-            <p className="px-3">{description}</p>
-            <Link to={`/booking/${_id}`}>
-                <button className="btn btn-warning">View {name.toLowerCase()}</button>
-            </Link> */}
-
-
+           
   <div class="col">
     <div class="card h-100 card-bg">
       <img src={img} class="card-img-top" alt="..."></img>
@@ -29,7 +21,7 @@ const Service = ({ service }) => {
       <div class="card-footer">
           
         <Link to={`/services/${_id}`}>
-        <button className="btn btn-primary mx-5">Book now</button>
+        <button className="btn btn-primary bookbutton">Book now</button>
         </Link>
         
       

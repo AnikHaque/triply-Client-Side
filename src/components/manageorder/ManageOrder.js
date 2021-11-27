@@ -14,13 +14,13 @@ setStatus(e.target.value);
     console.log(status);
 
     useEffect(() => {
-        fetch('https://rocky-hamlet-39429.herokuapp.com/orders')
+        fetch('http://localhost:5000/orders')
             .then(res => res.json())
             .then(data => setOrders(data));
     }, [])
 
     const handleUpdate =(id) => {
-        fetch(`https://rocky-hamlet-39429.herokuapp.com/updateStatus/${id}`,{
+        fetch(`http://localhost:5000/updateStatus/${id}`,{
             method:"PUT",
             headers:{"content-type":"application/json"},
 body:JSON.stringify({status}),
